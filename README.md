@@ -1,14 +1,36 @@
 # NAME
 
-Email::Sender::Transport::Mailgun - It's new $module
+Email::Sender::Transport::Mailgun - Email::Sender using Mailgun
 
 # SYNOPSIS
 
-    use Email::Sender::Transport::Mailgun;
+    use Email::Sender::Simple qw( sendmail );
+    use Email::Sender::Transport::Mailgun qw( );
+
+    my $transport = Email::Sender::Transport::Mailgun->new(
+        api_key => '...',
+        domain  => '...',
+    );
+
+    my $message = ...;
+
+    sendmail($message, { transport => $transport });
 
 # DESCRIPTION
 
-Email::Sender::Transport::Mailgun is ...
+This transport delivers mail via Mailgun's messages.mime API.
+
+The headers described in [https://documentation.mailgun.com/user\_manual.html#sending-via-smtp](https://documentation.mailgun.com/user_manual.html#sending-via-smtp) can be specified in the message headers.
+
+# ATTRIBUTES
+
+## api\_key
+
+Mailgun API key. See [https://documentation.mailgun.com/api-intro.html#authentication](https://documentation.mailgun.com/api-intro.html#authentication)
+
+## domain
+
+Mailgun domain. See [https://documentation.mailgun.com/api-intro.html#base-url](https://documentation.mailgun.com/api-intro.html#base-url)
 
 # LICENSE
 
@@ -19,4 +41,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-Stephen Thirlwall <>
+Stephen Thirlwall <sdt@cpan.org>
