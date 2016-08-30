@@ -1,13 +1,11 @@
 package Email::Sender::Transport::Mailgun;
+our $VERSION = "0.01";
+
 use Moo;
 with 'Email::Sender::Transport';
 
 use Furl qw( );
 use HTTP::Request::Common;
-
-our $VERSION = "0.01";
-
-with 'Email::Sender::Transport';
 
 has [qw( api_key domain )] => (
     is => 'ro',
