@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/sdt/Email-Sender-Transport-Mailgun.svg?branch=master)](https://travis-ci.org/sdt/Email-Sender-Transport-Mailgun)
 # NAME
 
 Email::Sender::Transport::Mailgun - Email::Sender using Mailgun

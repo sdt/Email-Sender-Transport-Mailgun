@@ -1,4 +1,4 @@
 name = "Email-Sender-Transport-Mailgun"
-# badges = ["travis"]
+badges = ["travis"]
 module_maker="ModuleBuildTiny"
 
