@@ -32,11 +32,10 @@ sub send_email {
     # message parameter needs to be a multipart/form-data file
     my $message = [ undef, 'message.mime', Content => $email->as_string ];
 
-    my $request = POST $self->uri . '/messages.mime',
+    my $response = $self->ua->request(POST $self->uri . '/messages.mime',
         Content_Type => 'form-data',
-        Content => { to => $to, message => $message };
-
-    my $response = $self->ua->request($request);
+        Content => { to => $to, message => $message },
+    );
 
     Email::Sender::Failure->throw($response->message)
         unless $response->is_success;
