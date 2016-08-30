@@ -38,8 +38,10 @@ sub send_email {
 
     my $response = $self->ua->request($request);
 
-    return $self->success if $response->is_success;
-    Email::Sender::Failure->throw($response->message);
+    Email::Sender::Failure->throw($response->message)
+        unless $response->is_success;
+
+    return $self->success;
 }
 
 sub _build_uri {
