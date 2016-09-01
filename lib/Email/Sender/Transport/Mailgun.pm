@@ -82,6 +82,8 @@ __END__
 
 =encoding utf-8
 
+=for stopwords deliverytime dkim testmode
+
 =head1 NAME
 
 Email::Sender::Transport::Mailgun - Email::Sender using Mailgun
