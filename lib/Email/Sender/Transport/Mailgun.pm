@@ -22,6 +22,11 @@ has [@options] => (
     predicate => 1,
 );
 
+has base_uri => (
+    is => 'lazy',
+    builder => sub { 'https://api.mailgun.net/v3' },
+);
+
 has uri => (
     is => 'lazy',
 );
@@ -64,8 +69,11 @@ sub send_email {
 sub _build_uri {
     my $self = shift;
 
-    return 'https://api:' . $self->api_key
-         . '@api.mailgun.net/v3/' . $self->domain;
+    my ($proto, $rest) = split('://', $self->base_uri);
+    my $api_key = $self->api_key;
+    my $domain = $self->domain;
+
+    return "$proto://api:$api_key\@$rest/$domain";
 }
 
 no Moo;
