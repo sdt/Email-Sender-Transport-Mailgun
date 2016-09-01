@@ -1,8 +1,8 @@
 requires 'perl', '5.008001';
 
 requires 'Email::Sender';
-requires 'Furl';
-requires 'HTTP::Request::Common';
+requires 'HTTP::Tiny';
+requires 'HTTP::Tiny::Multipart';
 requires 'IO::Socket::SSL';
 
 on 'test' => sub {

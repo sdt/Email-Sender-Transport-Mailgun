@@ -4,8 +4,8 @@ our $VERSION = "0.01";
 use Moo;
 with 'Email::Sender::Transport';
 
-use Furl qw( );
-use HTTP::Request::Common;
+use HTTP::Tiny            qw( );
+use HTTP::Tiny::Multipart qw( );
 
 has [qw( api_key domain )] => (
     is => 'ro',
@@ -28,7 +28,7 @@ has uri => (
 
 has ua => (
     is => 'lazy',
-    builder => sub { Furl->new },
+    builder => sub { HTTP::Tiny->new(verify_SSL => 1) },
 );
 
 # https://documentation.mailgun.com/api-sending.html#sending
@@ -37,7 +37,10 @@ sub send_email {
 
     my $content = {
         to => ref $env->{to} ? join(',', @{ $env->{to} }) : $env->{to},
-        message => [ undef, 'message.mime', Content => $email->as_string ],
+        message => {
+            filename => 'message.mime',
+            content => $email->as_string,
+        },
     };
 
     for my $option (@options) {
@@ -49,13 +52,11 @@ sub send_email {
         }
     }
 
-    my $response = $self->ua->request(POST $self->uri . '/messages.mime',
-        Content_Type => 'form-data',
-        Content => $content,
-    );
+    my $uri = $self->uri . '/messages.mime';
+    my $response = $self->ua->post_multipart($uri, $content);
 
-    Email::Sender::Failure->throw($response->message)
-        unless $response->is_success;
+    Email::Sender::Failure->throw($response->{content})
+        unless $response->{success};
 
     return $self->success;
 }
