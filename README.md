@@ -33,6 +33,10 @@ Mailgun API key. See [https://documentation.mailgun.com/api-intro.html#authentic
 
 Mailgun domain. See [https://documentation.mailgun.com/api-intro.html#base-url](https://documentation.mailgun.com/api-intro.html#base-url)
 
+## campaign deliverytime dkim tag testmode tracking tracking\_clicks tracking\_opens
+
+These correspond to the `o:` options in the `messages.mime` section of [https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
+
 # LICENSE
 
 Copyright (C) Stephen Thirlwall.

@@ -12,6 +12,16 @@ has [qw( api_key domain )] => (
     required => 1,
 );
 
+my @options = qw(
+    campaign deliverytime dkim tag testmode
+    tracking tracking_clicks tracking_opens
+);
+
+has [@options] => (
+    is => 'ro',
+    predicate => 1,
+);
+
 has uri => (
     is => 'lazy',
 );
@@ -25,14 +35,23 @@ has ua => (
 sub send_email {
     my ($self, $email, $env) = @_;
 
-    my $to = ref $env->{to} ? join(',', @{ $env->{to} }) : $env->{to};
+    my $content = {
+        to => ref $env->{to} ? join(',', @{ $env->{to} }) : $env->{to},
+        message => [ undef, 'message.mime', Content => $email->as_string ],
+    };
 
-    # message parameter needs to be a multipart/form-data file
-    my $message = [ undef, 'message.mime', Content => $email->as_string ];
+    for my $option (@options) {
+        my $has_option = "has_$option";
+        if ($self->$has_option) {
+            my $key = "o:$option";
+            $key =~ tr/_/-/;
+            $content->{$key} = $self->$option;
+        }
+    }
 
     my $response = $self->ua->request(POST $self->uri . '/messages.mime',
         Content_Type => 'form-data',
-        Content => { to => $to, message => $message },
+        Content => $content,
     );
 
     Email::Sender::Failure->throw($response->message)
@@ -87,6 +106,10 @@ Mailgun API key. See L<https://documentation.mailgun.com/api-intro.html#authenti
 =head2 domain
 
 Mailgun domain. See L<https://documentation.mailgun.com/api-intro.html#base-url>
+
+=head2  campaign deliverytime dkim tag testmode tracking tracking_clicks tracking_opens
+
+These correspond to the C<o:> options in the C<messages.mime> section of L<https://documentation.mailgun.com/api-sending.html#sending>
 
 =head1 LICENSE
 
