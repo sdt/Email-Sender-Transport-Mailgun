@@ -46,6 +46,7 @@
             "HTTP::Tiny" : "0",
             "HTTP::Tiny::Multipart" : "0",
             "IO::Socket::SSL" : "0",
+            "JSON::MaybeXS" : "0",
             "perl" : "5.008001"
          }
       },

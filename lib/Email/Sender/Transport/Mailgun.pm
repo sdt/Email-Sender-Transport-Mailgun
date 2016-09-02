@@ -4,8 +4,21 @@ our $VERSION = "0.01";
 use Moo;
 with 'Email::Sender::Transport';
 
-use HTTP::Tiny            qw( );
-use HTTP::Tiny::Multipart qw( );
+use HTTP::Tiny              qw( );
+use HTTP::Tiny::Multipart   qw( );
+use JSON::MaybeXS           qw( );
+
+{
+  package
+    Email::Sender::Success::MailgunSuccess;
+  use Moo;
+  extends 'Email::Sender::Success';
+  has id => (
+    is  => 'ro',
+    required => 1,
+  );
+  no Moo;
+}
 
 has [qw( api_key domain )] => (
     is => 'ro',
@@ -36,6 +49,11 @@ has ua => (
     builder => sub { HTTP::Tiny->new(verify_SSL => 1) },
 );
 
+has json => (
+    is => 'lazy',
+    builder => sub { JSON::MaybeXS->new },
+);
+
 # https://documentation.mailgun.com/api-sending.html#sending
 sub send_email {
     my ($self, $email, $env) = @_;
@@ -63,7 +81,14 @@ sub send_email {
     Email::Sender::Failure->throw($response->{content})
         unless $response->{success};
 
-    return $self->success;
+    return $self->success($response);
+}
+
+sub success {
+    my ($self, $response) = @_;
+
+    my $content = $self->json->decode($response->{content});
+    return Email::Sender::Success::MailgunSuccess->new(id => $content->{id});
 }
 
 sub _build_uri {

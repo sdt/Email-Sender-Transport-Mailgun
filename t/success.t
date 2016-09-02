@@ -15,6 +15,7 @@ my $proto   = 'http';
 my $host    = 'mailgun.example.com';
 my $api_key = 'abcdef';
 my $domain  = 'test.example.com';
+my $id      = '<return value>';
 
 my %envelope = (
     from => 'sender@test.example.com',
@@ -47,7 +48,8 @@ is(exception { $result = $transport->send($message, \%envelope) },
     undef, 'Mail sent ok');
 
 is(@requests, 1, 'HTTP request performed');
-isa_ok($result, 'Email::Sender::Success', 'Return value');
+isa_ok($result, 'Email::Sender::Success::MailgunSuccess', 'Return value');
+is($result->id, $id, 'Return id correct');
 
 my $req = shift @requests;
 is($req->{method}, 'POST', 'POST method');
@@ -76,7 +78,7 @@ sub mock_request {
         form   => parse_form($data->{content}),
     });
 
-    return { success => 1 };
+    return { success => 1, content => qq({"id":"$id"}) };
 }
 
 sub parse_form {
