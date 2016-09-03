@@ -78,7 +78,7 @@ sub send_email {
     my $uri = $self->uri . '/messages.mime';
     my $response = $self->ua->post_multipart($uri, $content);
 
-    Email::Sender::Failure->throw($response->{content})
+    $self->failure($response, $env->{to})
         unless $response->{success};
 
     return $self->success($response);
@@ -89,6 +89,21 @@ sub success {
 
     my $content = $self->json->decode($response->{content});
     return Email::Sender::Success::MailgunSuccess->new(id => $content->{id});
+}
+
+sub failure {
+    my ($self, $response, $recipients) = @_;
+
+    # Most errors have { message => $message } in the content, some, such as
+    # an auth error, have just a plain string.
+    my $content = eval { $self->json->decode($response->{content}) };
+    my $message = $content && $content->{message}
+                ? $content->{message} : $response->{content};
+
+    Email::Sender::Failure->throw({
+        message    => $message,
+        recipients => $recipients,
+    });
 }
 
 sub _build_uri {
