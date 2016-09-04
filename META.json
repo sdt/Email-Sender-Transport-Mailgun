@@ -1,5 +1,5 @@
 {
-   "abstract" : "Email::Sender using Mailgun",
+   "abstract" : "Mailgun transport for Email::Sender",
    "author" : [
       "Stephen Thirlwall <sdt@cpan.org>"
    ],

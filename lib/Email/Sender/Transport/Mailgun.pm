@@ -122,11 +122,11 @@ __END__
 
 =encoding utf-8
 
-=for stopwords deliverytime dkim testmode
+=for stopwords deliverytime dkim hardcode mailouts prepend templated testmode
 
 =head1 NAME
 
-Email::Sender::Transport::Mailgun - Email::Sender using Mailgun
+Email::Sender::Transport::Mailgun - Mailgun transport for Email::Sender
 
 =head1 SYNOPSIS
 
@@ -146,9 +146,25 @@ Email::Sender::Transport::Mailgun - Email::Sender using Mailgun
 
 This transport delivers mail via Mailgun's messages.mime API.
 
-The headers described in L<https://documentation.mailgun.com/user_manual.html#sending-via-smtp> can be specified in the message headers.
+=head2 Why use this module?
+
+The SMTP transport can also as used to send messages through Mailgun. In this
+case, Mailgun options must be specified with Mailgun-specific MIME headers.
+
+This module exposes those options as attributes, which can be set in code, or
+via C<EMAIL_SENDER_TRANSPORT_> environment variables.
+
+=head2 Why not use this module?
+
+This module uses Mailgun's messages.mime API, not the full-blown messages API.
+
+If you want to use advanced Mailgun features such as templated batch mailouts
+or mailing lists, you're better off using something L<WebService::Mailgun> or
+L<WWW::Mailgun>.
 
 =head1 ATTRIBUTES
+
+The attributes all correspond directly to Mailgun parameters.
 
 =head2 api_key
 
@@ -161,6 +177,52 @@ Mailgun domain. See L<https://documentation.mailgun.com/api-intro.html#base-url>
 =head2  campaign deliverytime dkim tag testmode tracking tracking_clicks tracking_opens
 
 These correspond to the C<o:> options in the C<messages.mime> section of L<https://documentation.mailgun.com/api-sending.html#sending>
+
+=head1 HEADERS
+
+The C<o:> options above can also be specified using the C<X-Mailgun-> headers
+listed here L<https://documentation.mailgun.com/user_manual.html#sending-via-smtp>
+
+If a single-valued option is specified in both the options and the headers, the
+header seems to take precedence. This doesn't seem to be documented, so don't
+rely on this behaviour.
+
+Multi-valued options use both the options and the headers.
+
+=head1 ENVIRONMENT
+
+The great strength of Email::Sender is that you don't need to hardcode your
+transport, nor any of the options relating to that transport. They can all be
+specified via environment variables.
+
+To select the Mailgun transport, use C<EMAIL_SENDER_TRANSPORT=Mailgun>.
+
+To specify any of the attributes above, prepend the attribute name with
+C<EMAIL_SENDER_TRANSPORT_>.
+
+=over
+
+=item EMAIL_SENDER_TRANSPORT_api_key
+
+=item EMAIL_SENDER_TRANSPORT_domain
+
+=item EMAIL_SENDER_TRANSPORT_campaign
+
+=item EMAIL_SENDER_TRANSPORT_deliverytime
+
+=item EMAIL_SENDER_TRANSPORT_dkim
+
+=item EMAIL_SENDER_TRANSPORT_tag
+
+=item EMAIL_SENDER_TRANSPORT_testmode
+
+=item EMAIL_SENDER_TRANSPORT_tracking
+
+=item EMAIL_SENDER_TRANSPORT_tracking_clicks
+
+=item EMAIL_SENDER_TRANSPORT_tracking_opens
+
+=back
 
 =head1 LICENSE
 
