@@ -23,7 +23,7 @@ This transport delivers mail via Mailgun's messages.mime API.
 
 ## Why use this module?
 
-The SMTP transport can also as used to send messages through Mailgun. In this
+The SMTP transport can also be used to send messages through Mailgun. In this
 case, Mailgun options must be specified with Mailgun-specific MIME headers.
 
 This module exposes those options as attributes, which can be set in code, or
