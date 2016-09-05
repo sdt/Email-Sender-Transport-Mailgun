@@ -1,7 +1,9 @@
 use strict;
 use Test::More;
 use Test::Fatal;
+use Test::Differences;
 
+use DateTime;
 use Email::Sender::Transport::Mailgun;
 
 {
@@ -35,12 +37,27 @@ Dear Recipient,
 sender
 END_MESSAGE
 
+my $when = DateTime->new(
+    year => 2066,
+    month => 12,
+    day => 31,
+    hour => 23,
+    minute => 59,
+    second => 59,
+    time_zone => 'UTC',
+);
+
+my $campaign = [qw( campaign1 campaign2 )];
+my $tag      = [qw( tag1 tag2 tag3 )];
+
 my $transport = Email::Sender::Transport::Mailgun->new(
     api_key  => $api_key,
     domain   => $domain,
     base_uri => "$proto://$host",
-    campaign => 'testing',
-    tracking_clicks => 'yes',
+    campaign => $campaign,
+    tag      => $tag,
+    tracking_clicks => 'htmlonly',
+    deliverytime => $when,
 );
 
 my $result;
@@ -57,16 +74,23 @@ is($req->{uri}, "$proto://api:$api_key\@$host/$domain/messages.mime", 'URI ok');
 like($req->{data}->{headers}->{'content-type'}, qr{^multipart/form-data},
         'Used multipart/form-data');
 
-my $form = $req->{form};
-is($form->{message}->{body}, $message, "Message in message.body");
-ok($form->{message}->{header}->{filename}, "Message sent as file");
-is($form->{to}->{body}, $envelope{to}, "Recipient in to:");
-is($form->{'o:campaign'}->{body}, 'testing', "Got o:campaign");
-is($form->{'o:tracking-clicks'}->{body}, 'yes', "Got o:tracking-clicks");
+sub body {
+    return (@_ > 1) ?  [ map { body($_) } @_ ] : { body => $_[0] };
+}
 
+eq_or_diff($req->{form}, {
+    message => {
+        body => $message,
+        filename => 'message.mime',
+    },
+    to                  => body($envelope{to}),
+    'o:tag'             => body(@$tag),
+    'o:campaign'        => body(@$campaign),
+    'o:deliverytime'    => body('Fri, 31 Dec 2066 23:59:59 +0000'),
+    'o:tracking-clicks' => body('htmlonly'),
+}, 'Message format as expected');
 
 done_testing;
-
 
 sub mock_request {
     my ($self, $method, $uri, $data) = @_;
@@ -94,10 +118,19 @@ sub parse_form {
         my $section = { body => $body };
 
         while ($header =~ /\s(\S+)="(.*?)"/g) {
-            $section->{header}->{$1} = $2;
+            $section->{$1} = $2;
         }
 
-        $form{ $section->{header}->{name} } = $section;
+        my $key = delete $section->{name};
+        if (exists $form{$key}) {
+            if (ref $form{$key} ne 'ARRAY') {
+                $form{$key} = [ $form{$key} ];
+            }
+            push(@{ $form{$key} }, $section);
+        }
+        else {
+            $form{$key} = $section;
+        }
     }
 
     return \%form;

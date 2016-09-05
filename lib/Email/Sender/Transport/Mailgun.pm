@@ -4,9 +4,10 @@ our $VERSION = "0.01";
 use Moo;
 with 'Email::Sender::Transport';
 
-use HTTP::Tiny              qw( );
-use HTTP::Tiny::Multipart   qw( );
-use JSON::MaybeXS           qw( );
+use HTTP::Tiny                      qw( );
+use HTTP::Tiny::Multipart           qw( );
+use JSON::MaybeXS                   qw( );
+use MooX::Types::MooseLike::Base    qw( ArrayRef Enum Str);
 
 {
   package
@@ -23,16 +24,36 @@ use JSON::MaybeXS           qw( );
 has [qw( api_key domain )] => (
     is => 'ro',
     required => 1,
+    isa => Str,
 );
 
-my @options = qw(
-    campaign deliverytime dkim tag testmode
-    tracking tracking_clicks tracking_opens
-);
-
-has [@options] => (
+has [qw( campaign tag )] => (
     is => 'ro',
     predicate => 1,
+    isa => ArrayRef[Str],
+    coerce => sub { ref $_[0] ? $_[0] : [ $_[0] ] },
+);
+
+has deliverytime => (
+    is => 'ro',
+    predicate => 1,
+    isa => Str,
+    coerce => sub {
+        ref $_[0] eq 'DateTime'
+            ? $_[0]->strftime('%a, %d %b %Y %H:%M:%S %z') : $_[0]
+    },
+);
+
+has [qw( dkim testmode tracking tracking_opens )] => (
+    is => 'ro',
+    predicate => 1,
+    isa => Enum[qw( yes no )],
+);
+
+has tracking_clicks => (
+    is => 'ro',
+    predicate => 1,
+    isa => Enum[qw( yes no htmlonly )],
 );
 
 has base_uri => (
@@ -65,6 +86,11 @@ sub send_email {
             content => $email->as_string,
         },
     };
+
+    my @options = qw(
+        campaign deliverytime dkim tag testmode
+        tracking tracking_clicks tracking_opens
+    );
 
     for my $option (@options) {
         my $has_option = "has_$option";
