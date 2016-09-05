@@ -34,10 +34,10 @@ via `EMAIL_SENDER_TRANSPORT_` environment variables.
 This module uses Mailgun's messages.mime API, not the full-blown messages API.
 
 If you want to use advanced Mailgun features such as templated batch mailouts
-or mailing lists, you're better off using something [WebService::Mailgun](https://metacpan.org/pod/WebService::Mailgun) or
-[WWW::Mailgun](https://metacpan.org/pod/WWW::Mailgun).
+or mailing lists, you're better off using something like [WebService::Mailgun](https://metacpan.org/pod/WebService::Mailgun)
+or [WWW::Mailgun](https://metacpan.org/pod/WWW::Mailgun).
 
-# ATTRIBUTES
+# REQUIRED ATTRIBUTES
 
 The attributes all correspond directly to Mailgun parameters.
 
@@ -49,18 +49,51 @@ Mailgun API key. See [https://documentation.mailgun.com/api-intro.html#authentic
 
 Mailgun domain. See [https://documentation.mailgun.com/api-intro.html#base-url](https://documentation.mailgun.com/api-intro.html#base-url)
 
-## campaign deliverytime dkim tag testmode tracking tracking\_clicks tracking\_opens
+# OPTIONAL ATTRIBUTES
 
-These correspond to the `o:` options in the `messages.mime` section of [https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
+These correspond to the `o:` options in the `messages.mime` section of
+[https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
 
-# HEADERS
+- campaign
+
+    Id of the campaign. Single string or arrayref of strings.
+
+- deliverytime
+
+    Desired time of delivery. Single string or DateTime object.
+
+- dkim
+
+    Enables/disables DKIM signatures. Boolean.
+
+- tag
+
+    Tag string. Single string or arrayref of strings.
+
+- testmode
+
+    Enables sending in test mode. Boolean.
+
+- tracking
+
+    Toggles tracking. Boolean.
+
+- tracking\_clicks
+
+    Toggles clicks tracking. Boolean or `'html_only'`.
+
+- tracking\_opens
+
+    Toggles open tracking. Boolean.
+
+# MIME HEADERS
 
 The `o:` options above can also be specified using the `X-Mailgun-` headers
 listed here [https://documentation.mailgun.com/user\_manual.html#sending-via-smtp](https://documentation.mailgun.com/user_manual.html#sending-via-smtp)
 
-If a single-valued option is specified in both the options and the headers, the
-header seems to take precedence. This doesn't seem to be documented, so don't
-rely on this behaviour.
+If a single-valued option is specified in both the options and the headers,
+experimentation shows the header takes precedence. This doesn't seem to be
+documented, so don't rely on this behaviour.
 
 Multi-valued options use both the options and the headers.
 

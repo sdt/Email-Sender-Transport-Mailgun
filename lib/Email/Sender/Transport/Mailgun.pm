@@ -185,10 +185,10 @@ via C<EMAIL_SENDER_TRANSPORT_> environment variables.
 This module uses Mailgun's messages.mime API, not the full-blown messages API.
 
 If you want to use advanced Mailgun features such as templated batch mailouts
-or mailing lists, you're better off using something L<WebService::Mailgun> or
-L<WWW::Mailgun>.
+or mailing lists, you're better off using something like L<WebService::Mailgun>
+or L<WWW::Mailgun>.
 
-=head1 ATTRIBUTES
+=head1 REQUIRED ATTRIBUTES
 
 The attributes all correspond directly to Mailgun parameters.
 
@@ -200,18 +200,55 @@ Mailgun API key. See L<https://documentation.mailgun.com/api-intro.html#authenti
 
 Mailgun domain. See L<https://documentation.mailgun.com/api-intro.html#base-url>
 
-=head2  campaign deliverytime dkim tag testmode tracking tracking_clicks tracking_opens
+=head1 OPTIONAL ATTRIBUTES
 
-These correspond to the C<o:> options in the C<messages.mime> section of L<https://documentation.mailgun.com/api-sending.html#sending>
+These correspond to the C<o:> options in the C<messages.mime> section of
+L<https://documentation.mailgun.com/api-sending.html#sending>
 
-=head1 HEADERS
+=over
+
+=item campaign
+
+Id of the campaign. Single string or arrayref of strings.
+
+=item deliverytime
+
+Desired time of delivery. Single string or DateTime object.
+
+=item dkim
+
+Enables/disables DKIM signatures. Boolean.
+
+=item tag
+
+Tag string. Single string or arrayref of strings.
+
+=item testmode
+
+Enables sending in test mode. Boolean.
+
+=item tracking
+
+Toggles tracking. Boolean.
+
+=item tracking_clicks
+
+Toggles clicks tracking. Boolean or C<'html_only'>.
+
+=item tracking_opens
+
+Toggles open tracking. Boolean.
+
+=back
+
+=head1 MIME HEADERS
 
 The C<o:> options above can also be specified using the C<X-Mailgun-> headers
 listed here L<https://documentation.mailgun.com/user_manual.html#sending-via-smtp>
 
-If a single-valued option is specified in both the options and the headers, the
-header seems to take precedence. This doesn't seem to be documented, so don't
-rely on this behaviour.
+If a single-valued option is specified in both the options and the headers,
+experimentation shows the header takes precedence. This doesn't seem to be
+documented, so don't rely on this behaviour.
 
 Multi-valued options use both the options and the headers.
 
