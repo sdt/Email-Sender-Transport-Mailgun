@@ -55,7 +55,7 @@ my $transport = Email::Sender::Transport::Mailgun->new(
     domain   => $domain,
     base_uri => "$proto://$host",
     campaign => $campaign,
-    tag      => $tag,
+    tag      => join(', ', @$tag),
     tracking_clicks => 'htmlonly',
     deliverytime => $when,
 );

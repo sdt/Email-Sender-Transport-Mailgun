@@ -56,11 +56,11 @@ These correspond to the `o:` options in the `messages.mime` section of
 
 ## campaign
 
-Id of the campaign. Single string or arrayref of strings.
+Id of the campaign. Comma-separated string list or arrayref of strings.
 
 ## deliverytime
 
-Desired time of delivery. Single string or DateTime object.
+Desired time of delivery. String or DateTime object.
 
 ## dkim
 
@@ -68,7 +68,7 @@ Enables/disables DKIM signatures. `'yes'` or `'no'`.
 
 ## tag
 
-Tag string. Single string or arrayref of strings.
+Tag string. Comma-separated string list or arrayref of strings.
 
 ## testmode
 

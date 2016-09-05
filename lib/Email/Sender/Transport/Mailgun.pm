@@ -31,7 +31,7 @@ has [qw( campaign tag )] => (
     is => 'ro',
     predicate => 1,
     isa => ArrayRef[Str],
-    coerce => sub { ref $_[0] ? $_[0] : [ $_[0] ] },
+    coerce => sub { ref $_[0] ? $_[0] : [ split(/,\s*/, $_[0]) ] },
 );
 
 has deliverytime => (
@@ -207,11 +207,11 @@ L<https://documentation.mailgun.com/api-sending.html#sending>
 
 =head2 campaign
 
-Id of the campaign. Single string or arrayref of strings.
+Id of the campaign. Comma-separated string list or arrayref of strings.
 
 =head2 deliverytime
 
-Desired time of delivery. Single string or DateTime object.
+Desired time of delivery. String or DateTime object.
 
 =head2 dkim
 
@@ -219,7 +219,7 @@ Enables/disables DKIM signatures. C<'yes'> or C<'no'>.
 
 =head2 tag
 
-Tag string. Single string or arrayref of strings.
+Tag string. Comma-separated string list or arrayref of strings.
 
 =head2 testmode
 
