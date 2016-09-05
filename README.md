@@ -54,37 +54,37 @@ Mailgun domain. See [https://documentation.mailgun.com/api-intro.html#base-url](
 These correspond to the `o:` options in the `messages.mime` section of
 [https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
 
-- campaign
+## campaign
 
-    Id of the campaign. Single string or arrayref of strings.
+Id of the campaign. Single string or arrayref of strings.
 
-- deliverytime
+## deliverytime
 
-    Desired time of delivery. Single string or DateTime object.
+Desired time of delivery. Single string or DateTime object.
 
-- dkim
+## dkim
 
-    Enables/disables DKIM signatures. Boolean.
+Enables/disables DKIM signatures. `'yes'` or `'no'`.
 
-- tag
+## tag
 
-    Tag string. Single string or arrayref of strings.
+Tag string. Single string or arrayref of strings.
 
-- testmode
+## testmode
 
-    Enables sending in test mode. Boolean.
+Enables sending in test mode. `'yes'` or `'no'`.
 
-- tracking
+## tracking
 
-    Toggles tracking. Boolean.
+Toggles tracking. `'yes'` or `'no'`.
 
-- tracking\_clicks
+## tracking\_clicks
 
-    Toggles clicks tracking. Boolean or `'html_only'`.
+Toggles clicks tracking. `'yes'`, `'no'` or `'html_only'`.
 
-- tracking\_opens
+## tracking\_opens
 
-    Toggles open tracking. Boolean.
+Toggles open tracking. `'yes'` or `'no'`.
 
 # MIME HEADERS
 

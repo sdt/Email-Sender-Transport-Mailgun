@@ -205,41 +205,37 @@ Mailgun domain. See L<https://documentation.mailgun.com/api-intro.html#base-url>
 These correspond to the C<o:> options in the C<messages.mime> section of
 L<https://documentation.mailgun.com/api-sending.html#sending>
 
-=over
-
-=item campaign
+=head2 campaign
 
 Id of the campaign. Single string or arrayref of strings.
 
-=item deliverytime
+=head2 deliverytime
 
 Desired time of delivery. Single string or DateTime object.
 
-=item dkim
+=head2 dkim
 
-Enables/disables DKIM signatures. Boolean.
+Enables/disables DKIM signatures. C<'yes'> or C<'no'>.
 
-=item tag
+=head2 tag
 
 Tag string. Single string or arrayref of strings.
 
-=item testmode
+=head2 testmode
 
-Enables sending in test mode. Boolean.
+Enables sending in test mode. C<'yes'> or C<'no'>.
 
-=item tracking
+=head2 tracking
 
-Toggles tracking. Boolean.
+Toggles tracking. C<'yes'> or C<'no'>.
 
-=item tracking_clicks
+=head2 tracking_clicks
 
-Toggles clicks tracking. Boolean or C<'html_only'>.
+Toggles clicks tracking. C<'yes'>, C<'no'> or C<'html_only'>.
 
-=item tracking_opens
+=head2 tracking_opens
 
-Toggles open tracking. Boolean.
-
-=back
+Toggles open tracking. C<'yes'> or C<'no'>.
 
 =head1 MIME HEADERS
 
