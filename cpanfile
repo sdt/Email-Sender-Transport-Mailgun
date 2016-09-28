@@ -9,6 +9,7 @@ requires 'Moo';
 requires 'MooX::Types::MooseLike::Base';
 
 on 'test' => sub {
+    requires 'DateTime';
     requires 'Test::Fatal';
     requires 'Test::More', '0.98';
     requires 'Test::Differences';
