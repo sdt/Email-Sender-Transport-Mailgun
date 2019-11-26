@@ -51,8 +51,8 @@ Mailgun domain. See [https://documentation.mailgun.com/api-intro.html#base-url](
 
 # OPTIONAL ATTRIBUTES
 
-These correspond to the `o:` options in the `messages.mime` section of
-[https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
+These (except region) correspond to the `o:` options in the `messages.mime`
+section of [https://documentation.mailgun.com/api-sending.html#sending](https://documentation.mailgun.com/api-sending.html#sending)
 
 ## campaign
 
@@ -65,6 +65,12 @@ Desired time of delivery. String or DateTime object.
 ## dkim
 
 Enables/disables DKIM signatures. `'yes'` or `'no'`.
+
+## region
+
+Defines used Mailgun region. `'us'` (default) or `'eu'`.
+
+See [https://documentation.mailgun.com/en/latest/api-intro.html#mailgun-regions](https://documentation.mailgun.com/en/latest/api-intro.html#mailgun-regions).
 
 ## tag
 
@@ -113,6 +119,7 @@ To specify any of the attributes above, prepend the attribute name with
 - EMAIL\_SENDER\_TRANSPORT\_campaign
 - EMAIL\_SENDER\_TRANSPORT\_deliverytime
 - EMAIL\_SENDER\_TRANSPORT\_dkim
+- EMAIL\_SENDER\_TRANSPORT\_region
 - EMAIL\_SENDER\_TRANSPORT\_tag
 - EMAIL\_SENDER\_TRANSPORT\_testmode
 - EMAIL\_SENDER\_TRANSPORT\_tracking
