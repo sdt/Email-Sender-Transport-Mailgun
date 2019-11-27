@@ -34,8 +34,8 @@ via `EMAIL_SENDER_TRANSPORT_` environment variables.
 This module uses Mailgun's messages.mime API, not the full-blown messages API.
 
 If you want to use advanced Mailgun features such as templated batch mailouts
-or mailing lists, you're better off using something like [WebService::Mailgun](https://metacpan.org/pod/WebService::Mailgun)
-or [WWW::Mailgun](https://metacpan.org/pod/WWW::Mailgun).
+or mailing lists, you're better off using something like [WebService::Mailgun](https://metacpan.org/pod/WebService%3A%3AMailgun)
+or [WWW::Mailgun](https://metacpan.org/pod/WWW%3A%3AMailgun).
 
 # REQUIRED ATTRIBUTES
 
