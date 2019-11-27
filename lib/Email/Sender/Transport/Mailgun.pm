@@ -1,5 +1,5 @@
 package Email::Sender::Transport::Mailgun;
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Moo;
 with 'Email::Sender::Transport';
@@ -59,7 +59,7 @@ has tracking_clicks => (
 has region => (
     is => 'ro',
     predicate => 1,
-    isa => Enum[qw/us eu/],
+    isa => Enum[qw( us eu )],
 );
 
 has base_uri => (
@@ -227,7 +227,7 @@ Desired time of delivery. String or DateTime object.
 
 Enables/disables DKIM signatures. C<'yes'> or C<'no'>.
 
--head2 region
+=head2 region
 
 Defines used Mailgun region. C<'us'> (default) or C<'eu'>.
 
