@@ -81,7 +81,7 @@ has json => (
     builder => sub { JSON::MaybeXS->new },
 );
 
-# https://documentation.mailgun.com/api-sending.html#sending
+# https://documentation.mailgun.com/en/latest/api-sending.html#sending
 sub send_email {
     my ($self, $email, $env) = @_;
 
@@ -204,16 +204,16 @@ The attributes all correspond directly to Mailgun parameters.
 
 =head2 api_key
 
-Mailgun API key. See L<https://documentation.mailgun.com/api-intro.html#authentication>
+Mailgun API key. See L<https://documentation.mailgun.com/en/latest/api-intro.html#authentication-1>
 
 =head2 domain
 
-Mailgun domain. See L<https://documentation.mailgun.com/api-intro.html#base-url>
+Mailgun domain. See L<https://documentation.mailgun.com/en/latest/api-intro.html#base-url-1>
 
 =head1 OPTIONAL ATTRIBUTES
 
 These (except region) correspond to the C<o:> options in the C<messages.mime>
-section of L<https://documentation.mailgun.com/api-sending.html#sending>
+section of L<https://documentation.mailgun.com/en/latest/api-sending.html#sending>
 
 =head2 campaign
 
@@ -231,7 +231,7 @@ Enables/disables DKIM signatures. C<'yes'> or C<'no'>.
 
 Defines used Mailgun region. C<'us'> (default) or C<'eu'>.
 
-See L<https://documentation.mailgun.com/en/latest/api-intro.html#mailgun-regions>.
+See L<https://documentation.mailgun.com/en/latest/api-intro.html#mailgun-regions-1>
 
 =head2 tag
 
@@ -256,7 +256,7 @@ Toggles open tracking. C<'yes'> or C<'no'>.
 =head1 MIME HEADERS
 
 The C<o:> options above can also be specified using the C<X-Mailgun-> headers
-listed here L<https://documentation.mailgun.com/user_manual.html#sending-via-smtp>
+listed here L<https://documentation.mailgun.com/en/latest/user_manual.html#sending-via-smtp>
 
 If a single-valued option is specified in both the options and the headers,
 experimentation shows the header takes precedence. This doesn't seem to be
