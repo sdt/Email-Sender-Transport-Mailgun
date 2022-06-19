@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sdt/Email-Sender-Transport-Mailgun.svg?branch=master)](https://travis-ci.org/sdt/Email-Sender-Transport-Mailgun)
+[![Actions Status](https://github.com/sdt/Email-Sender-Transport-Mailgun/workflows/test/badge.svg)](https://github.com/sdt/Email-Sender-Transport-Mailgun/actions)
 # NAME
 
 Email::Sender::Transport::Mailgun - Mailgun transport for Email::Sender
