@@ -142,8 +142,12 @@ sub _build_uri {
     my $self = shift;
 
     my ($proto, $rest) = split('://', $self->base_uri);
-    my $api_key = $self->api_key;
     my $domain = $self->domain;
+
+    # Percent-escape anything other than alphanumeric and - _ . ~
+    # https://github.com/sdt/Email-Sender-Transport-Mailgun/issues/4
+    my $api_key = $self->api_key;
+    $api_key =~ s/[^-_.~0-9a-zA-Z]/sprintf('%%%02x',ord($&))/eg;
 
     # adapt endpoint based on region setting.
     $rest =~ s/(\.mailgun)/sprintf('.%s%s', $self->region, $1)/e
