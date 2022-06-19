@@ -2,6 +2,8 @@ Revision history for Perl extension Email-Sender-Transport-Mailgun
 
 {{$NEXT}}
 
+0.03 2022-06-19T22:58:43Z
+
     - fix documentation links (#3)
     - encode reserved chars in apikey (#5)
     - removed obsolete campaign attribute (#6)
