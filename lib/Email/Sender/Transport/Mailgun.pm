@@ -1,5 +1,5 @@
 package Email::Sender::Transport::Mailgun;
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 use Moo;
 with 'Email::Sender::Transport';
