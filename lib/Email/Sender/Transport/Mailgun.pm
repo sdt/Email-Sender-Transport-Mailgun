@@ -27,7 +27,7 @@ has [qw( api_key domain )] => (
     isa => Str,
 );
 
-has [qw( campaign tag )] => (
+has [qw( tag )] => (
     is => 'ro',
     predicate => 1,
     isa => ArrayRef[Str],
@@ -94,8 +94,7 @@ sub send_email {
     };
 
     my @options = qw(
-        campaign deliverytime dkim tag testmode
-        tracking tracking_clicks tracking_opens
+        deliverytime dkim tag testmode tracking tracking_clicks tracking_opens
     );
 
     for my $option (@options) {
@@ -219,10 +218,6 @@ Mailgun domain. See L<https://documentation.mailgun.com/en/latest/api-intro.html
 These (except region) correspond to the C<o:> options in the C<messages.mime>
 section of L<https://documentation.mailgun.com/en/latest/api-sending.html#sending>
 
-=head2 campaign
-
-Id of the campaign. Comma-separated string list or arrayref of strings.
-
 =head2 deliverytime
 
 Desired time of delivery. String or DateTime object.
@@ -284,8 +279,6 @@ C<EMAIL_SENDER_TRANSPORT_>.
 =item EMAIL_SENDER_TRANSPORT_api_key
 
 =item EMAIL_SENDER_TRANSPORT_domain
-
-=item EMAIL_SENDER_TRANSPORT_campaign
 
 =item EMAIL_SENDER_TRANSPORT_deliverytime
 
