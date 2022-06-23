@@ -43,7 +43,7 @@
       "runtime" : {
          "requires" : {
             "Email::Sender" : "0",
-            "HTTP::Tiny" : "0",
+            "HTTP::Tiny" : "0.037",
             "HTTP::Tiny::Multipart" : "0",
             "IO::Socket::SSL" : "0",
             "JSON::MaybeXS" : "0",
@@ -73,7 +73,7 @@
          "web" : "https://github.com/sdt/Email-Sender-Transport-Mailgun"
       }
    },
-   "version" : "0.03",
+   "version" : "0.04",
    "x_contributors" : [
       "Florian Helmberger <fh@25th-floor.com>",
       "Stephen Thirlwall <sdt@dr.com>"
