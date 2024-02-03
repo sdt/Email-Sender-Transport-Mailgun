@@ -2,6 +2,8 @@ Revision history for Perl extension Email-Sender-Transport-Mailgun
 
 {{$NEXT}}
 
+    - retry API requests on 5xx response
+
 0.04 2022-06-23T02:01:20Z
 
     - need HTTP::Tiny >= 0.037 for apikey encoding
