@@ -2,6 +2,8 @@ Revision history for Perl extension Email-Sender-Transport-Mailgun
 
 {{$NEXT}}
 
+    - add api_key_path parameter, alongside api_key
+
 0.05 2024-02-03T23:50:49Z
 
     - retry API requests on 5xx response
